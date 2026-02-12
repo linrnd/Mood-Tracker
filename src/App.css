@@ -37,7 +37,7 @@ html, body {
 /* Calendar Area - 80% of left section height */
 .calendar-area {
   height: 80%;
-  background-color: white;
+  background-color: #d4d3b7;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -63,13 +63,13 @@ html, body {
 .month-name {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: #b6a7e0;
 }
 
 .year-name {
   font-size: 28px;
   font-weight: bold;
-  color: #666;
+  color: #b6a7e0;
 }
 
 .nav-button {
@@ -92,7 +92,7 @@ html, body {
 .today-button {
   padding: 8px 16px;
   background-color: transparent;
-  color: #666;
+  color: #b6a7e0;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -105,9 +105,9 @@ html, body {
 }
 .calendar-title {
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 300;
-  color: #333;
+  color: white;
   margin-bottom: 20px;
   letter-spacing: 1px;
 }
@@ -115,13 +115,13 @@ html, body {
 .month-name {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: #b6a7e0;
 }
 
 .year-name {
   font-size: 28px;
   font-weight: bold;
-  color: #666;
+  color: #b6a7e0;
 }
 
 .calendar-grid {
@@ -136,7 +136,7 @@ html, body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: #666;
+  color: #bb2a2b;
   padding: 10px;
   font-size: 14px;
 }
@@ -146,7 +146,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background-color: white;
+  background-color: #faf5f1;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   padding: 8px;
@@ -197,19 +197,19 @@ html, body {
 
 /* Current day styling */
 .day-cell.current-day {
-  background-color: #4a4a4a;
-  color: white;
+  background-color: #be292b;
+  color: #333;
   font-weight: bold;
 }
 
 .day-cell.current-day:hover {
-  background-color: #5a5a5a;
+  background-color: #f5d88a;
 }
 
 /* Mood Area - 20% of left section height */
 .mood-area {
   height: 20%;
-  background-color: white;
+  background-color: #faf5f1;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -278,7 +278,7 @@ html, body {
 /* Cat Picture Area - 20% width, full height */
 .cat-area {
   width: 20%;
-  background-color: white;
+  background-color: #faf5f1;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

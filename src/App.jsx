@@ -18,9 +18,12 @@ function App() {
   const [editingDay, setEditingDay] = useState(null); // Which day's note is being edited?
   const [noteText, setNoteText] = useState(''); // Current note text being edited
   const [showAnalyse, setShowAnalyse] = useState(false); // Show analyse popup
+  const [showPieChart, setShowPieChart] = useState(false); // Show pie chart popup
   const [popupPosition, setPopupPosition] = useState({ x: null, y: null }); // Popup position
+  const [piePopupPosition, setPiePopupPosition] = useState({ x: null, y: null }); // Pie chart popup position
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [draggingPopup, setDraggingPopup] = useState(null); // Which popup is being dragged
   // Auto-save to localStorage whenever dayMoods changes
 useEffect(() => {
   localStorage.setItem('moodData', JSON.stringify(dayMoods));
@@ -115,7 +118,28 @@ useEffect(() => {
   };
 
   const dailyPoints = calculateDailyPoints();
-  
+
+  // Calculate mood frequency for pie chart
+  const calculateMoodFrequency = () => {
+    const frequency = {};
+    Object.values(dayMoods).forEach(moods => {
+      moods.forEach(mood => {
+        frequency[mood.name] = (frequency[mood.name] || 0) + 1;
+      });
+    });
+    // Convert to array and filter out zeros, sort by frequency
+    return moodOptions
+      .map(mood => ({
+        ...mood,
+        count: frequency[mood.name] || 0
+      }))
+      .filter(mood => mood.count > 0)
+      .sort((a, b) => b.count - a.count);
+  };
+
+  const moodFrequency = calculateMoodFrequency();
+  const totalMoods = moodFrequency.reduce((sum, m) => sum + m.count, 0);
+
   // Select a mood to add to calendar
   const selectMood = (mood) => {
     setSelectedMood(mood);
@@ -213,11 +237,12 @@ const goToToday = () => {
     }
   };
 
-  // Drag handlers for analyse popup
-  const handleDragStart = (e) => {
-    if (e.target.closest('.analyse-close')) return; // Don't drag when clicking close
+  // Drag handlers for popups
+  const handleDragStart = (e, popupType) => {
+    if (e.target.closest('.analyse-close') || e.target.closest('.pie-close')) return;
     setIsDragging(true);
-    const popup = e.currentTarget.closest('.analyse-popup');
+    setDraggingPopup(popupType);
+    const popup = e.currentTarget.closest('.analyse-popup, .pie-popup');
     const rect = popup.getBoundingClientRect();
     setDragOffset({
       x: e.clientX - rect.left,
@@ -228,20 +253,31 @@ const goToToday = () => {
   const handleDrag = (e) => {
     if (!isDragging) return;
     e.preventDefault();
-    setPopupPosition({
+    const newPosition = {
       x: e.clientX - dragOffset.x,
       y: e.clientY - dragOffset.y
-    });
+    };
+    if (draggingPopup === 'analyse') {
+      setPopupPosition(newPosition);
+    } else if (draggingPopup === 'pie') {
+      setPiePopupPosition(newPosition);
+    }
   };
 
   const handleDragEnd = () => {
     setIsDragging(false);
+    setDraggingPopup(null);
   };
 
   // Reset popup position when opening
   const openAnalyse = () => {
     setPopupPosition({ x: null, y: null });
     setShowAnalyse(true);
+  };
+
+  const openPieChart = () => {
+    setPiePopupPosition({ x: null, y: null });
+    setShowPieChart(true);
   };
 
   return (
